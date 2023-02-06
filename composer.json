@@ -1,0 +1,20 @@
+{
+  "name": "k3kan/noframe",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "k3kan",
+      "email": "aintbor@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=8.0"
+  }
+}
