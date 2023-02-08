@@ -16,6 +16,8 @@
   },
   "require": {
     "php": ">=8.0",
-    "filp/whoops": "^2.14"
+    "filp/whoops": "^2.14",
+    "symfony/http-foundation": "^6.0",
+    "ext-http": "*"
   }
 }

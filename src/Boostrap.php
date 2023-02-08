@@ -3,20 +3,12 @@
 declare(strict_types = 1);
 
 require __DIR__ . './../vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-$environment = 'develop';
+$request = new Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
+$response = new Response('Content', Response::HTTP_OK, ['content-type' => 'text/html']);
 
-/**
- *  Register the error handler
- */
-$whoops = new Whoops\Run();
-if ($environment !== 'production') {
-    $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
-} else {
-    $whoops->pushHandler(function($e) {
-        echo 'Todo: Friendly error page and send an email to developer';
-    });
-}
-$whoops->register();
-
-throw new Exception();
+$response->setContent('404 - Page not found');
+$response->setStatusCode(Response::HTTP_NOT_FOUND);
+$response->send();
