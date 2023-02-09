@@ -18,6 +18,7 @@
     "php": ">=8.0",
     "filp/whoops": "^2.14",
     "symfony/http-foundation": "^6.0",
-    "ext-http": "*"
+    "ext-http": "*",
+    "nikic/fast-route": "^1.3"
   }
 }
