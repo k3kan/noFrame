@@ -11,12 +11,10 @@ $request = new Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
 $response = new Response('Content', Response::HTTP_OK, ['content-type' => 'text/html']);
 
 $dispatcher = \FastRoute\simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/hello-world', function () {
-        echo 'Hello World';
-    });
-    $r->addRoute('GET', '/another-route', function () {
-        echo 'This works too';
-    });
+    $routes = include('Routes.php');
+    foreach ($routes as $route) {
+        $r->addRoute($route[0], $route[1], $route[2]);
+    }
 });
 
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
