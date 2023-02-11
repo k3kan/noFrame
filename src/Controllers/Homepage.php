@@ -2,10 +2,16 @@
 
 namespace App\Controllers;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Homepage
 {
+    public function __construct(private Response $response)
+    {}
+
     public function show()
     {
-        echo 'Test route';
+        $this->response->setContent('Show text');
+        $this->response->sendContent();
     }
 }
