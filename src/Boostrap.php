@@ -1,14 +1,14 @@
 <?php
 
 declare(strict_types = 1);
-
 require __DIR__ . './../vendor/autoload.php';
 use FastRoute\RouteCollector;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-$request = new Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
-$response = new Response('Content', Response::HTTP_OK, ['content-type' => 'text/html']);
+/** @var \Auryn\Injector $injector */
+$injector = include('Dependencies.php');
+
+$request = $injector->make('Symfony\Component\HttpFoundation\Request');
+$response = $injector->make('Symfony\Component\HttpFoundation\Response');
 
 $dispatcher = \FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $routes = include('Routes.php');
@@ -34,7 +34,7 @@ switch ($routeInfo[0]) {
         $method = $routeInfo[1][1];
         $vars = $routeInfo[2];
 
-        $class = new $className($response);
+        $class = $injector->make($className);
         $class->$method($vars);
         break;
 }
