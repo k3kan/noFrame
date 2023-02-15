@@ -15,6 +15,10 @@ $injector->define('Symfony\Component\HttpFoundation\Request', [
     ':server' => $_SERVER
 ]);
 
+$injector->share('App\Page\FilePageReader');
+$injector->define('App\Page\FilePageReader', [
+    ':pageFolder' => __DIR__ . '/../pages',
+]);
 $injector->share('Symfony\Component\HttpFoundation\Response');
 $injector->define('Symfony\Component\HttpFoundation\Response', [
     ':content' => 'Content',
