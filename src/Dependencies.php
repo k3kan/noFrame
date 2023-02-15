@@ -21,5 +21,13 @@ $injector->define('Symfony\Component\HttpFoundation\Response', [
     ':status' => 200,
     ':headers' => ['content-type' => 'text/html'],
 ]);
+$injector->share('Twig\Loader\FilesystemLoader');
+$injector->define('Twig\Loader\FilesystemLoader', [
+    ':paths' => __DIR__ . '/Template',
+]);
+$injector->share('Twig\Environment');
+$injector->define('Twig\Environment', [
+    'loader' => 'Twig\Loader\FilesystemLoader',
+]);
 
 return $injector;
