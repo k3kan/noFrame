@@ -4,12 +4,12 @@ namespace App\Controllers;
 
 use App\Page\FilePageReader;
 use App\Page\InvalidPageException;
-use App\Template\TwigRenderer;
+use App\Templates\FrontendTwigRenderer;
 use Symfony\Component\HttpFoundation\Response;
 
 class Page
 {
-    public function __construct(private Response $response,private TwigRenderer $renderer, private FilePageReader $pageReader)
+    public function __construct(private Response $response,private FrontendTwigRenderer $renderer, private FilePageReader $pageReader)
     {}
 
     public function show($params)
@@ -24,7 +24,7 @@ class Page
             $this->response->send();
            return;
         }
-        $html = $this->renderer->render('Page.html', $data);
+        $html = $this->renderer->render('Page', $data);
         $this->response->setContent($html);
         $this->response->sendContent();
     }

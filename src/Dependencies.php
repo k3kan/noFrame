@@ -1,7 +1,10 @@
 <?php
 
 declare(strict_types = 1);
+
 use Auryn\Injector;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 $injector = new Injector();
 
@@ -25,13 +28,17 @@ $injector->define('Symfony\Component\HttpFoundation\Response', [
     ':status' => 200,
     ':headers' => ['content-type' => 'text/html'],
 ]);
-$injector->share('Twig\Loader\FilesystemLoader');
-$injector->define('Twig\Loader\FilesystemLoader', [
-    ':paths' => __DIR__ . '/Template',
-]);
-$injector->share('Twig\Environment');
-$injector->define('Twig\Environment', [
-    'loader' => 'Twig\Loader\FilesystemLoader',
-]);
+
+$injector->delegate('Twig\Environment', function () use ($injector)
+{
+    $loader = new FilesystemLoader(__DIR__ . '/Templates');
+    $twig = new Environment($loader);
+    return $twig;
+});
+
+$injector->alias('App\Templates\Renderer','App\Templates\FrontendTwigRenderer');
+
+$injector->alias('App\Menu\MenuReader', 'App\Menu\ArrayMenuReader');
+$injector->share('App\Menu\ArrayMenuReader');
 
 return $injector;
